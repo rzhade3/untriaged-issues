@@ -1,0 +1,34 @@
+name: 'Untriaged Issues'
+description: 'Finds all untriaged issues (issues that have not been labeled or assigned) in a given repository'
+author: 'rzhade3'
+inputs:
+  token:
+    description: 'GitHub token with read/write permissions on issues'
+    default: ${{ github.token }}
+  repository:
+    description: 'Repository to check issues for'
+    default: ${{ github.repository }}
+  owner:
+    description: 'Owner of repository to check issues for'
+    default: ${{ github.repository_owner }}
+  required-labels:
+    description: 'Comma-separated list of labels that must be present on an issue to be considered triaged'
+    default: ''
+  required-assignees:
+    description: 'Comma-separated list of assignees that must be present on an issue to be considered triaged. If this is set, the issue must have at least one of the assignees listed'
+    default: ''
+  num-assignees:
+    description: 'Number of assignees that must be present on an issue to be considered triaged'
+    required: true
+  after:
+    description: 'Only consider issues created after X days ago'
+    default: 7
+  before:
+    description: 'Only consider issues created before X days ago'
+    default: 1
+outputs:
+  untriaged-issues:
+    description: 'Comma-separated list of untriaged issues'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
